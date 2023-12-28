@@ -1,3 +1,6 @@
+import os
+
+API_KEY: str = os.getenv('YT_API_KEY')
 
 
 class Channel:
@@ -8,5 +11,4 @@ class Channel:
         pass
 
     def print_info(self) -> None:
-        """Выводит в консоль информацию о канале."""
-        pass
+        """Выводит в консоль информацию о канале"""

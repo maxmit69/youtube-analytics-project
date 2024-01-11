@@ -4,11 +4,13 @@ from googleapiclient.discovery import build
 
 
 class Channel:
-    """Класс для ютуб-канала"""
+    """Класс для ютуб-канала.
+    """
     API_KEY: str = os.getenv('YT_API_KEY')
 
     def __init__(self, channel_id) -> None:
-        """ Экземпляр инициализируется id канала."""
+        """ Экземпляр инициализируется id канала.
+        """
         self.__channel_id = channel_id
         """Дальше все данные будут подтягиваться по API."""
         channel = self.get_service().channels().list(id=self.__channel_id, part='snippet,statistics').execute()
@@ -20,54 +22,66 @@ class Channel:
         self.subscriber_count = channel['items'][0]['statistics']['subscriberCount']  # Количество подписчиков в канале
 
     def __str__(self) -> str:
-        """Выводит информацию о канале в строке."""
+        """ Выводит информацию о канале в строке.
+        """
         return f"{self.title} ({self.url})"
 
     def __add__(self, other: str) -> int:
-        """Сложение подписчиков каналов."""
+        """ Сложение подписчиков каналов.
+        """
         if not isinstance(other, int) and not isinstance(self, int):
             return int(self.subscriber_count) + int(other.subscriber_count)
 
     def __sub__(self, other: str) -> int:
-        """Вычитание подписчиков из второго канала."""
+        """ Вычитание подписчиков из второго канала.
+        """
         return int(other.subscriber_count) - int(self.subscriber_count)
 
     def __sub__(self, other: str) -> int:
-        """Вычитание подписчиков каналов из первого канала."""
+        """ Вычитание подписчиков каналов из первого канала.
+        """
         return int(self.subscriber_count) - int(other.subscriber_count)
 
     def __gt__(self, other: str) -> int:
-        """ Сравнение подписчиков каналов на больше."""
+        """ Сравнение подписчиков каналов на больше.
+        """
         return int(self.subscriber_count) > int(other.subscriber_count)
 
     def __ge__(self, other: str) -> int:
-        """ Сравнение подписчиков каналов на больше или равно."""
+        """ Сравнение подписчиков каналов на больше или равно.
+        """
         return int(self.subscriber_count) >= int(other.subscriber_count)
 
     def __lt__(self, other: str) -> int:
-        """Сравнение подписчиков каналов на меньше."""
+        """ Сравнение подписчиков каналов на меньше.
+        """
         return int(self.subscriber_count) < int(other.subscriber_count)
 
     def __le__(self, other: str) -> int:
-        """Сравнение подписчиков каналов на меньше или равно."""
+        """ Сравнение подписчиков каналов на меньше или равно.
+        """
         return int(self.subscriber_count) <= int(other.subscriber_count)
 
     def __eq__(self, other: str) -> int:
-        """Сравнение подписчиков каналов на равенство."""
+        """ Сравнение подписчиков каналов на равенство.
+        """
         return int(self.subscriber_count) == int(other.subscriber_count)
 
     def print_info(self) -> None:
-        """Выводит в консоль информацию о канале."""
+        """ Выводит в консоль информацию о канале.
+        """
         channel = self.get_service().channels().list(id=self.__channel_id, part='snippet,statistics').execute()
         print(json.dumps(channel, indent=2, ensure_ascii=False))
 
     @classmethod
     def get_service(cls) -> object:
-        """Возвращает объект для работы с API вне класса."""
+        """ Возвращает объект для работы с API вне класса.
+        """
         return build('youtube', 'v3', developerKey=cls.API_KEY)
 
     def to_dict(self) -> dict:
-        """Возвращает словарь данных канала."""
+        """ Возвращает словарь данных канала.
+        """
         return {
             'title': self.title,
             'description': self.description,
@@ -78,6 +92,7 @@ class Channel:
         }
 
     def to_json(self, file_name: str) -> json:
-        """Сохраняет канал в файл."""
+        """ Сохраняет канал в файл.
+        """
         with open(file_name, 'w', encoding='utf-8') as f:
             json.dump(self.to_dict(), f, indent=2, ensure_ascii=False)

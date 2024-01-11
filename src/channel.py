@@ -19,6 +19,43 @@ class Channel:
         self.view_count = channel['items'][0]['statistics']['viewCount']              # Количество просмотров в канале
         self.subscriber_count = channel['items'][0]['statistics']['subscriberCount']  # Количество подписчиков в канале
 
+    def __str__(self) -> str:
+        """Выводит информацию о канале в строке."""
+        return f"{self.title} ({self.url})"
+
+    def __add__(self, other: str) -> int:
+        """Сложение подписчиков каналов."""
+        if not isinstance(other, int) and not isinstance(self, int):
+            return int(self.subscriber_count) + int(other.subscriber_count)
+
+    def __sub__(self, other: str) -> int:
+        """Вычитание подписчиков из второго канала."""
+        return int(other.subscriber_count) - int(self.subscriber_count)
+
+    def __sub__(self, other: str) -> int:
+        """Вычитание подписчиков каналов из первого канала."""
+        return int(self.subscriber_count) - int(other.subscriber_count)
+
+    def __gt__(self, other: str) -> int:
+        """ Сравнение подписчиков каналов на больше."""
+        return int(self.subscriber_count) > int(other.subscriber_count)
+
+    def __ge__(self, other: str) -> int:
+        """ Сравнение подписчиков каналов на больше или равно."""
+        return int(self.subscriber_count) >= int(other.subscriber_count)
+
+    def __lt__(self, other: str) -> int:
+        """Сравнение подписчиков каналов на меньше."""
+        return int(self.subscriber_count) < int(other.subscriber_count)
+
+    def __le__(self, other: str) -> int:
+        """Сравнение подписчиков каналов на меньше или равно."""
+        return int(self.subscriber_count) <= int(other.subscriber_count)
+
+    def __eq__(self, other: str) -> int:
+        """Сравнение подписчиков каналов на равенство."""
+        return int(self.subscriber_count) == int(other.subscriber_count)
+
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
         channel = self.get_service().channels().list(id=self.__channel_id, part='snippet,statistics').execute()
@@ -44,4 +81,3 @@ class Channel:
         """Сохраняет канал в файл."""
         with open(file_name, 'w', encoding='utf-8') as f:
             json.dump(self.to_dict(), f, indent=2, ensure_ascii=False)
-

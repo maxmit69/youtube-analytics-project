@@ -4,7 +4,7 @@ from googleapiclient.discovery import build
 
 
 class Channel:
-    """Класс для ютуб-канала.
+    """ Класс для ютуб-канала.
     """
     API_KEY: str = os.getenv('YT_API_KEY')
 
@@ -12,7 +12,8 @@ class Channel:
         """ Экземпляр инициализируется id канала.
         """
         self.__channel_id = channel_id
-        """Дальше все данные будут подтягиваться по API."""
+        """ Дальше все данные будут подтягиваться по API.
+        """
         channel = self.get_service().channels().list(id=self.__channel_id, part='snippet,statistics').execute()
         self.title = channel['items'][0]['snippet']['title']                          # Название канала
         self.description = channel['items'][0]['snippet']['description']              # Описание канала
@@ -29,43 +30,50 @@ class Channel:
     def __add__(self, other: str) -> int:
         """ Сложение подписчиков каналов.
         """
-        if not isinstance(other, int) and not isinstance(self, int):
+        if isinstance(other, Channel) and isinstance(self, Channel):
             return int(self.subscriber_count) + int(other.subscriber_count)
 
     def __sub__(self, other: str) -> int:
         """ Вычитание подписчиков из второго канала.
         """
-        return int(other.subscriber_count) - int(self.subscriber_count)
+        if isinstance(other, Channel) and isinstance(self, Channel):
+            return int(other.subscriber_count) - int(self.subscriber_count)
 
     def __sub__(self, other: str) -> int:
         """ Вычитание подписчиков каналов из первого канала.
         """
-        return int(self.subscriber_count) - int(other.subscriber_count)
+        if isinstance(other, Channel) and isinstance(self, Channel):
+            return int(self.subscriber_count) - int(other.subscriber_count)
 
     def __gt__(self, other: str) -> int:
         """ Сравнение подписчиков каналов на больше.
         """
-        return int(self.subscriber_count) > int(other.subscriber_count)
+        if isinstance(other, Channel) and isinstance(self, Channel):
+            return int(self.subscriber_count) > int(other.subscriber_count)
 
     def __ge__(self, other: str) -> int:
         """ Сравнение подписчиков каналов на больше или равно.
         """
-        return int(self.subscriber_count) >= int(other.subscriber_count)
+        if isinstance(other, Channel) and isinstance(self, Channel):
+            return int(self.subscriber_count) >= int(other.subscriber_count)
 
     def __lt__(self, other: str) -> int:
         """ Сравнение подписчиков каналов на меньше.
         """
-        return int(self.subscriber_count) < int(other.subscriber_count)
+        if isinstance(other, Channel) and isinstance(self, Channel):
+            return int(self.subscriber_count) < int(other.subscriber_count)
 
     def __le__(self, other: str) -> int:
         """ Сравнение подписчиков каналов на меньше или равно.
         """
-        return int(self.subscriber_count) <= int(other.subscriber_count)
+        if isinstance(other, Channel) and isinstance(self, Channel):
+            return int(self.subscriber_count) <= int(other.subscriber_count)
 
     def __eq__(self, other: str) -> int:
         """ Сравнение подписчиков каналов на равенство.
         """
-        return int(self.subscriber_count) == int(other.subscriber_count)
+        if isinstance(other, Channel) and isinstance(self, Channel):
+            return int(self.subscriber_count) == int(other.subscriber_count)
 
     def print_info(self) -> None:
         """ Выводит в консоль информацию о канале.

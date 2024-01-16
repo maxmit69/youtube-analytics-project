@@ -30,49 +30,49 @@ class Channel:
     def __add__(self, other: str) -> int:
         """ Сложение подписчиков каналов.
         """
-        if isinstance(other, Channel) and isinstance(self, Channel):
+        if isinstance(other, self.__class__):
             return int(self.subscriber_count) + int(other.subscriber_count)
 
     def __sub__(self, other: str) -> int:
         """ Вычитание подписчиков из второго канала.
         """
-        if isinstance(other, Channel) and isinstance(self, Channel):
+        if isinstance(other, self.__class__):
             return int(other.subscriber_count) - int(self.subscriber_count)
 
     def __sub__(self, other: str) -> int:
         """ Вычитание подписчиков каналов из первого канала.
         """
-        if isinstance(other, Channel) and isinstance(self, Channel):
+        if isinstance(other, self.__class__):
             return int(self.subscriber_count) - int(other.subscriber_count)
 
     def __gt__(self, other: str) -> int:
         """ Сравнение подписчиков каналов на больше.
         """
-        if isinstance(other, Channel) and isinstance(self, Channel):
+        if isinstance(other, self.__class__):
             return int(self.subscriber_count) > int(other.subscriber_count)
 
     def __ge__(self, other: str) -> int:
         """ Сравнение подписчиков каналов на больше или равно.
         """
-        if isinstance(other, Channel) and isinstance(self, Channel):
+        if isinstance(other, self.__class__):
             return int(self.subscriber_count) >= int(other.subscriber_count)
 
     def __lt__(self, other: str) -> int:
         """ Сравнение подписчиков каналов на меньше.
         """
-        if isinstance(other, Channel) and isinstance(self, Channel):
+        if isinstance(other, self.__class__):
             return int(self.subscriber_count) < int(other.subscriber_count)
 
     def __le__(self, other: str) -> int:
         """ Сравнение подписчиков каналов на меньше или равно.
         """
-        if isinstance(other, Channel) and isinstance(self, Channel):
+        if isinstance(other, self.__class__):
             return int(self.subscriber_count) <= int(other.subscriber_count)
 
     def __eq__(self, other: str) -> int:
         """ Сравнение подписчиков каналов на равенство.
         """
-        if isinstance(other, Channel) and isinstance(self, Channel):
+        if isinstance(other, self.__class__):
             return int(self.subscriber_count) == int(other.subscriber_count)
 
     def print_info(self) -> None:

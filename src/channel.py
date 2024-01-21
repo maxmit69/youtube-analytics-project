@@ -27,6 +27,10 @@ class Channel:
         """
         return f"{self.title} ({self.url})"
 
+    def __repr__(self):
+        return (f"{self.__class__.__name__}{self.title}, {self.url}, {self.video_count}, {self.view_count}, "
+                f"{self.subscriber_count}, {self.description}")
+
     def __add__(self, other: str) -> int:
         """ Сложение подписчиков каналов.
         """

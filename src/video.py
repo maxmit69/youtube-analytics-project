@@ -28,6 +28,9 @@ class Video:
         """
         return f"{self.title}"
 
+    def __repr__(self):
+        return f"{self.__class__.__name__}{self.title}, {self.url}, {self.like_count}, {self.view_count}"
+
     @property
     def get_service(self) -> build:
         """ Возвращает экземпляр API.
@@ -38,6 +41,7 @@ class Video:
 class PLVideo(Video):
     """ Класс для ютуб-видео из плейлиста.
     """
+
     def __init__(self, video_id, playlist_id):
         """ Экземпляр инициализируется id видео и id плейлиста.
         """

@@ -18,12 +18,12 @@ class PlayList:
                                                                 part='contentDetails',
                                                                 ).execute()
         video_ids: list[str] = [video['contentDetails']['videoId'] for video in playlist_videos['items']]
-        playlist_response = self.get_service.playlists().list(id=playlist_id, part='snippet').execute()
+        playlist_response = self.get_service.playlists().list(id=self.__playlist_id, part='snippet').execute()
         self.video_response = self.get_service.videos().list(part='contentDetails, statistics',
                                                              id=','.join(video_ids)
                                                              ).execute()
         self.title = playlist_response['items'][0]['snippet']['title']     # Название плейлиста
-        self.url = f'https://www.youtube.com/playlist?list={playlist_id}'  # Ссылка на плейлист
+        self.url = f'https://www.youtube.com/playlist?list={self.__playlist_id}'  # Ссылка на плейлист
 
     def __str__(self) -> str:
         """ Выводит информацию о плейлисте в строке для пользователя

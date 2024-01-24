@@ -36,7 +36,7 @@ class PlayList:
         return f"{self.__class__.__name__}{self.title}, {self.url}"
 
     @property
-    def get_service(self) -> build:
+    def get_service(self) -> build:     
         """ Возвращает экземпляр API.
         """
         return build('youtube', 'v3', developerKey=os.getenv('YT_API_KEY'))

@@ -9,19 +9,28 @@ class Video:
     def __init__(self, video_id) -> None:
         """ Экземпляр инициализируется id видео.
         """
+        try:
+            self.__video_id = video_id
+            """ Дальше все данные будут подтягиваться по API.
+            """
+            video_response = self.get_service.videos().list(part='snippet,statistics,contentDetails,topicDetails',
+                                                            id=video_id
+                                                            ).execute()
 
-        self.__video_id = video_id
-        """ Дальше все данные будут подтягиваться по API.
-        """
-        video_response = self.get_service.videos().list(part='snippet,statistics,contentDetails,topicDetails',
-                                                        id=video_id
-                                                        ).execute()
+            self.title = video_response['items'][0]['snippet']['title']              # Название видео
+            self.description = video_response['items'][0]['snippet']['description']  # Описание видео
+            self.url = f'https://www.youtube.com/watch?v={video_id}'                 # Ссылка на видео
+            self.like_count = video_response['items'][0]['statistics']['likeCount']  # Количество лайков
+            self.view_count = video_response['items'][0]['statistics']['viewCount']  # Количество просмотров
 
-        self.title = video_response['items'][0]['snippet']['title']              # Название видео
-        self.description = video_response['items'][0]['snippet']['description']  # Описание видео
-        self.url = f'https://www.youtube.com/watch?v={video_id}'                 # Ссылка на видео
-        self.like_count = video_response['items'][0]['statistics']['likeCount']  # Количество лайков
-        self.view_count = video_response['items'][0]['statistics']['viewCount']  # Количество просмотров
+        except Exception:
+            """ Если пользователь передал не корректное id.
+            """
+            self.title = None
+            self.description = None
+            self.url = None
+            self.like_count = None
+            self.view_count = None
 
     def __str__(self) -> str:
         """ Выводит информацию о видео в строке.
@@ -29,6 +38,8 @@ class Video:
         return f"{self.title}"
 
     def __repr__(self):
+        """ Выводит информацию о видео в строке для разработчика
+        """
         return f"{self.__class__.__name__}{self.title}, {self.url}, {self.like_count}, {self.view_count}"
 
     @property

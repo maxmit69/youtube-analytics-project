@@ -9,8 +9,9 @@ class Video:
     def __init__(self, video_id) -> None:
         """ Экземпляр инициализируется id видео.
         """
+        self.__video_id = video_id
+
         try:
-            self.__video_id = video_id
             """ Дальше все данные будут подтягиваться по API.
             """
             video_response = self.get_service.videos().list(part='snippet,statistics,contentDetails,topicDetails',
@@ -23,7 +24,7 @@ class Video:
             self.like_count = video_response['items'][0]['statistics']['likeCount']  # Количество лайков
             self.view_count = video_response['items'][0]['statistics']['viewCount']  # Количество просмотров
 
-        except Exception:
+        except IndexError:
             """ Если пользователь передал не корректное id.
             """
             self.title = None
